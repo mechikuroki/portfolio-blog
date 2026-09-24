@@ -93,9 +93,9 @@
               </ul>
             </li>
           </ul>
-	  <form class="form-inline my-2 my-lg-0" method="POST" action="{% url 'search' %}">
+	  <form class="my-2 my-lg-0" method="POST" action="{% url 'search' %}">
             {% csrf_token %}
-	    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+	    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search_query">
 	      <div class="btn-group" role="group" aria-label="Default button group">
               <button type="submit" class="btn btn-secondary" name="search_tags">Search by tags</button>
               <button type="submit" class="btn btn-secondary" name="search_products">Search by title</button>
@@ -135,6 +135,15 @@
               <p>{{ product.short_description }}</p>
               <small>Creado: {{ product.created_at }}</small>
               <small>Editado: {{ product.updated_at }}</small>
+	      {% for tag in product.tags.all %}
+                <small>{{tag.name}}</small>
+	      {% endfor %}
+	      {% if user.is_superuser %}
+	        <form class="my-2 my-lg-0" method="POST" action="{% url 'delete' %}">
+                  {% csrf_token %}
+	          <button type="button" class="btn btn-outline-danger">Delete</button>
+                </form>
+	      {% endif %}
             </div>
           </div>
         </div>

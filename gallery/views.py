@@ -6,7 +6,7 @@ from .forms import ProductForm, CommentForm
 def index(request):
     return render(request, 'blogsite/index.html')
 
-def product_list(request, search=None):
+def product_list(request):
     products = Product.objects.all()
     return render(request, 'blogsite/blog.html', {'products': products})
 
@@ -27,18 +27,29 @@ def product_detail(request, pk):
                                            'comment_form': comment_form})
 
 def search(request):
-    if 'search_products' in request.POST:
-        search = request.POST['search_products']
-        products = Product.objects.filter(name__icontains=search).distinct()
-    elif 'search_tags' in request.POST:
-        search = request.POST['search_tags']
-        products = Product.objects.filter(tags__name__icontains=search).distinct()
-    return render(request, 'blogsite/blog.html', {'products': products})
+    if request.method == 'POST':
+        products = Product.objects.none()
+        search_text = request.POST.get('search_query', '') 
+        
+        if 'search_products' in request.POST:
+            products = Product.objects.filter(name__icontains=search_text).distinct()
+            
+        elif 'search_tags' in request.POST:
+            products = Product.objects.filter(tags__name__icontains=search_text).distinct()
+            
+        return render(request, 'blogsite/blog.html', {'products': products})
+
+    else:
+        return redirect('product_list')
 
 """
-def product_detail(request, pk):
-    product = Product.objects.get(pk=pk)
-    return render(request, 'blogsite/blog2.html', {'product': product})
+def delete(request, pk):
+    if user.is_superuser:
+        if request.method == 'POST':
+            product = get_object_or_404(Product, pk=pk)
+            product.delete()
+            return redirect('product_list')
+        return render(request, 'delete.html')
 
 
 def edit_product(request, pk):
@@ -51,13 +62,6 @@ def edit_product(request, pk):
     else:
         form = ProductForm(instance=product)
     return render(request, 'blogsite/edit.html', {'form': form})
-
-def delete_product(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    if request.method == 'POST':
-        product.delete()
-        return redirect('product_list')
-    return render(request, 'blogsite/delete.html', {'product': product})
 
 
 def home(request):

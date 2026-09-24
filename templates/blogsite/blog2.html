@@ -121,6 +121,10 @@
       <a href="{% url 'product_list' %}">Volver al blog</a>
     </div>
 
+    {% for tag in product.tags.all %}
+      <small>{{tag.name}}</small>
+    {% endfor %}
+        
     <div class="spaced-box"></div>
 
     <ul class="comment-section">
