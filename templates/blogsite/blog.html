@@ -139,9 +139,9 @@
                 <small>{{tag.name}}</small>
 	      {% endfor %}
 	      {% if user.is_superuser %}
-	        <form class="my-2 my-lg-0" method="POST" action="{% url 'delete' %}">
+	        <form class="my-2 my-lg-0" method="GET" action="{% url 'delete' product.pk %}">
                   {% csrf_token %}
-	          <button type="button" class="btn btn-outline-danger">Delete</button>
+	          <button type="submit" class="btn btn-outline-danger">Delete</button>
                 </form>
 	      {% endif %}
             </div>

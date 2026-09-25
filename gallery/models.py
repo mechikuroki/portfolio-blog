@@ -35,6 +35,7 @@ class Comment(models.Model):
     email = models.EmailField()
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
 
     class Meta:
         ordering = ['created_at']

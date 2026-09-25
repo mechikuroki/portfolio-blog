@@ -42,16 +42,20 @@ def search(request):
     else:
         return redirect('product_list')
 
-"""
 def delete(request, pk):
-    if user.is_superuser:
+    if request.user.is_superuser:
+        product = get_object_or_404(Product, pk=pk)
         if request.method == 'POST':
-            product = get_object_or_404(Product, pk=pk)
+        #if 'confirm_delete' in request.POST:
             product.delete()
             return redirect('product_list')
-        return render(request, 'delete.html')
+        return render(request, 'blogsite/delete.html', {'product': product})
+    else:
+        return redirect('product_list')
 
 
+
+"""
 def edit_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':
