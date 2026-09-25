@@ -137,6 +137,11 @@
           <small>{{ comment.created_at }}</small>
         </div>
         <div class="comment-part">{{ comment.body | linebreaks }}</div>
+	{% if user.is_superuser %}
+	  <form class="my-2 my-lg-0" method="GET" action="{% url 'delete_comment' comment.pk %}">
+	    <button type="submit" class="btn btn-outline-danger">Delete</button>
+          </form>
+	{% endif %}
       </li>
       {% endfor %}
       <li class="comment">

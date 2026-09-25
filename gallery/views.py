@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Product
+from .models import Product, Comment
 from .forms import ProductForm, CommentForm  
 
 def index(request):
@@ -46,10 +46,19 @@ def delete(request, pk):
     if request.user.is_superuser:
         product = get_object_or_404(Product, pk=pk)
         if request.method == 'POST':
-        #if 'confirm_delete' in request.POST:
             product.delete()
             return redirect('product_list')
         return render(request, 'blogsite/delete.html', {'product': product})
+    else:
+        return redirect('product_list')
+
+def delete_comment(request, pk):
+    if request.user.is_superuser:
+        comment = get_object_or_404(Comment, pk=pk)
+        if request.method == 'POST':
+            comment.delete()
+            return redirect('product_list')
+        return render(request, 'blogsite/delete_comment.html', {'comment': comment})
     else:
         return redirect('product_list')
 

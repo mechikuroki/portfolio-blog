@@ -1,0 +1,7 @@
+<h2>Delete Comment</h2>
+<p>Are you sure you want to delete the comment by "{{ comment.name }}"?</p>
+<p>Comment reads: {{ comment.body }}</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes, Delete</button>
+</form>
