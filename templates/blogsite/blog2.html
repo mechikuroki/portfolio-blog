@@ -1,16 +1,11 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
   {% load static %}
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ product.name }} - Blog</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="{% static 'icon.png' %}" type="image/x-icon" href="icon.png" />
     <link rel="stylesheet" href="{% static 'style.css' %}" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -21,72 +16,72 @@
     />
   </head>
 
-  <body>
-    <nav class="navbar navbar-expand-lg bg-body custom-navbar">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'index' %}"
-          ><img src="{% static 'icon.png' %}" alt="logo" width="30" height="24"
-        /></a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+  <body class="bg-main text-custom">
+    <nav class="bg-accent-basic w-full px-4 py-2.5">
+      <div class="max-w-7xl mx-auto grid grid-cols-12 items-center gap-4">
+        <a class="col-span-2 sm:col-span-1" href="{% url 'index' %}">
+          <img
+            src="{% static 'icon.png' %}"
+            alt="logo"
+            class="w-[30px] h-[24px]"
+          />
+        </a>
+
+        <div
+          class="col-span-8 sm:col-span-10 grid grid-cols-1 md:grid-cols-12 items-center gap-4"
         >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
+          <ul
+            class="md:col-span-8 grid grid-flow-col auto-cols-max gap-4 items-center"
+          >
+            <li>
               <a
-                class="nav-link active"
-                aria-current="page"
+                class="text-custom hover:opacity-75 font-normal"
                 href="{% url 'index' %}"
                 >Inicio</a
               >
             </li>
-            <li class="nav-item">
+            <li>
               <a
-                class="nav-link active"
-                aria-current="page"
+                class="text-custom hover:opacity-75 font-normal"
                 href="{% url 'product_list' %}"
                 >Blog</a
               >
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% static 'CV.pdf' %}">CV</a>
-            </li>
-            <li class="nav-item dropdown">
+            <li>
               <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
+                class="text-custom hover:opacity-75 font-normal"
+                href="{% static 'CV.pdf' %}"
+                >CV</a
               >
-                Proyectos
-              </a>
-              <ul class="dropdown-menu">
+            </li>
+            <li class="relative group">
+              <button
+                class="text-custom hover:opacity-75 inline-grid grid-flow-col items-center gap-1"
+              >
+                Proyectos <span>▼</span>
+              </button>
+              <ul
+                class="absolute left-0 hidden group-hover:grid bg-white border border-gray-200 shadow-md rounded-md py-2 w-56 z-50"
+              >
                 <li>
                   <a
-                    class="dropdown-item"
+                    class="block px-4 py-2 text-black hover:bg-gray-100"
                     href="https://github.com/mechikuroki/tp1"
                     >Reproductor de música</a
                   >
                 </li>
                 <li>
                   <a
-                    class="dropdown-item"
+                    class="block px-4 py-2 text-black hover:bg-gray-100"
                     href="https://github.com/mechikuroki/nomekops"
                     >Implementación de diferentes DSA</a
                   >
                 </li>
-                <li><hr class="dropdown-divider" /></li>
+                <li class="my-1 border-t border-gray-200"></li>
                 <li>
-                  <a class="dropdown-item" href="https://github.com/mechikuroki"
+                  <a
+                    class="block px-4 py-2 text-black hover:bg-gray-100"
+                    href="https://github.com/mechikuroki"
                     >Github</a
                   >
                 </li>
@@ -94,76 +89,172 @@
             </li>
           </ul>
         </div>
-        <div class="theme-toggle">
-          <input type="radio" id="mode_dark" name="mode" value="dark" />
-          <label for="mode_dark">🌙</label>
-          <input
-            type="radio"
-            id="mode_light"
-            name="mode"
-            value="light"
-            checked
-          />
-          <label for="mode_light">☀️</label>
+
+        <div
+          class="col-span-2 sm:col-span-1 grid place-items-center justify-self-end"
+        >
+          <div class="grid place-items-center">
+            <input
+              type="radio"
+              id="mode_dark"
+              name="mode"
+              value="dark"
+              class="sr-only"
+            />
+            <label
+              for="mode_dark"
+              class="w-10 h-10 grid place-items-center cursor-pointer hidden"
+              >🌙</label
+            >
+            <input
+              type="radio"
+              id="mode_light"
+              name="mode"
+              value="light"
+              class="sr-only"
+              checked
+            />
+            <label
+              for="mode_light"
+              class="w-10 h-10 grid place-items-center cursor-pointer hidden"
+              >☀️</label
+            >
+          </div>
         </div>
       </div>
     </nav>
 
-    <h1>{{ product.name }} - Blog</h1>
+    <h1
+      class="font-normal text-custom text-[clamp(2.5rem,6vw,4.75rem)] text-center p-[20px_10px]"
+    >
+      {{ product.name }} - Blog
+    </h1>
 
-    <div class="centered-image">
-      <img src="{{ product.image.url }}" alt="{{ product.name }}" width="200" />
+    <div class="block mx-auto text-center">
+      <img
+        src="{{ product.image.url }}"
+        alt="{{ product.name }}"
+        width="200"
+        class="mx-auto border-4 border-accent"
+      />
     </div>
-    <div class="spaced-box"></div>
-    <p>{{ product.description }}</p>
+    <div class="mb-5"></div>
+    <p class="text-xl text-center p-2.5 text-custom">
+      {{ product.description }}
+    </p>
 
-    <div class="centered-link">
-      <a href="{% url 'product_list' %}">Volver al blog</a>
+    <div class="text-center">
+      <a class="dark-link" href="{% url 'product_list' %}">Volver al blog</a>
     </div>
 
-    {% for tag in product.tags.all %}
-      <small>{{tag.name}}</small>
-    {% endfor %}
-        
-    <div class="spaced-box"></div>
-
-    <ul class="comment-section">
-      {% for comment in comments.all %}
-      <li class="comment">
-        <div class="comment-part">
-          <h5>{{ comment.name }}</h5>
-        </div>
-        <div class="comment-part">
-          <small>{{ comment.created_at }}</small>
-        </div>
-        <div class="comment-part">{{ comment.body | linebreaks }}</div>
-	{% if user.is_superuser %}
-	  <form class="my-2 my-lg-0" method="GET" action="{% url 'delete_comment' comment.pk %}">
-	    <button type="submit" class="btn btn-outline-danger">Delete</button>
-          </form>
-	{% endif %}
-      </li>
+    <div class="flex flex-wrap justify-center gap-2 my-4">
+      {% for tag in product.tags.all %}
+      <span
+        class="inline-block bg-[var(--accent-color-basic)] text-slate-900 text-sm font-medium px-3 py-1 rounded-md shadow-sm border border-slate-300"
+      >
+        {{ tag.name }}
+      </span>
       {% endfor %}
-      <li class="comment">
-        <div class="comment-part"><h5>Leave a comment</h5></div>
-        <form method="post" style="margin-top: 1.3em">
-          {{ comment_form.as_p}} {% csrf_token %}
-          <button type="submit" class="btn btn-primary btn-lg">Submit</button>
-        </form>
-      </li>
-    </ul>
+    </div>
 
-    <footer>
-      <div class="spaced-box"></div>
-      <h4>¡Contactame!</h4>
-      <div class="centered-link">
-        <a href="mailto:kurokimercedes@gmail.com">Email</a>
+    <div class="mb-5"></div>
+
+    <div class="max-w-3xl mx-auto px-4 my-8">
+      <h3 class="text-2xl font-bold mb-6 text-center">Comentarios</h3>
+
+      <ul class="space-y-4 p-0 list-none">
+        {% for comment in comments.all %}
+        <li
+          class="bg-[var(--accent-color)] border border-[var(--accent-color-2)] rounded-xl p-5 shadow-sm transition-all hover:shadow-md"
+        >
+          <div
+            class="flex items-center justify-between border-b border-black/10 pb-2 mb-3"
+          >
+            <span
+              class="font-bold text-lg bg-[var(--accent-color-basic)] px-3 py-1 rounded-md"
+            >
+              {{ comment.name }}
+            </span>
+            <span class="text-xs text-gray-600 font-mono">
+              {{ comment.created_at|date:"d M Y, H:i" }}
+            </span>
+          </div>
+
+          <div class="text-gray-800 text-base leading-relaxed my-2">
+            {{ comment.body|linebreaks }}
+          </div>
+
+          {% if user.is_superuser %}
+          <div class="mt-3 text-right">
+            <form
+              class="inline"
+              method="GET"
+              action="{% url 'delete_comment' comment.pk %}"
+            >
+              <button
+                type="submit"
+                class="border border-red-500 text-red-500 px-3 py-1 rounded hover:bg-red-500 hover:text-white transition-colors"
+              >
+                Delete
+              </button>
+            </form>
+          </div>
+          {% endif %}
+        </li>
+        {% empty %}
+        <li class="text-center text-gray-500 py-4 italic">
+          No hay comentarios.
+        </li>
+        {% endfor %}
+
+        <li
+          class="bg-[var(--accent-color)] border-2 border-[var(--accent-color-basic)] rounded-xl p-6 shadow-md mt-8"
+        >
+          <h5
+            class="text-xl font-bold mb-4 bg-[var(--accent-color-basic)] inline-block px-3 py-1 rounded-md"
+          >
+            Leave a comment
+          </h5>
+          <form method="post" class="space-y-4">
+            {% csrf_token %}
+            <div
+              class="comment-form-fields [&_p]:mb-3 [&_input]:form-control [&_textarea]:form-control"
+            >
+              {{ comment_form.as_p }}
+            </div>
+            <button
+              type="submit"
+              class="btn btn-primary btn-lg w-full sm:w-auto px-5 py-2 font-semibold shadow"
+            >
+              Publicar Comentario
+            </button>
+          </form>
+        </li>
+      </ul>
+    </div>
+    <footer class="bg-accent text-center py-4 mt-8">
+      <div class="mb-5"></div>
+      <h4
+        class="font-normal text-custom text-[clamp(1.5rem,3vw,1.875rem)] bg-accent-basic p-2.5"
+      >
+        ¡Contactame!
+      </h4>
+      <div class="text-center">
+        <a
+          class="p-2.5 inline-block dark-link"
+          href="mailto:kurokimercedes@gmail.com"
+          >Email</a
+        >
       </div>
-      <div class="spaced-box"></div>
-      <div class="centered-link">
-        <a href="https://github.com/mechikuroki">Github</a>
+      <div class="mb-5"></div>
+      <div class="text-center">
+        <a
+          class="p-2.5 inline-block dark-link"
+          href="https://github.com/mechikuroki"
+          >Github</a
+        >
       </div>
-      <div class="spaced-box"></div>
+      <div class="mb-5"></div>
     </footer>
   </body>
 </html>

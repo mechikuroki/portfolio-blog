@@ -1,16 +1,11 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
   {% load static %}
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="{% static 'icon.png' %}" type="image/x-icon" href="icon.png" />
     <link rel="stylesheet" href="{% static 'style.css' %}" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -21,72 +16,72 @@
     />
   </head>
 
-  <body>
-    <nav class="navbar navbar-expand-lg bg-body custom-navbar">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'index' %}"
-          ><img src="{% static 'icon.png' %}" alt="logo" width="30" height="24"
-        /></a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+  <body class="bg-main text-custom">
+    <nav class="bg-accent-basic w-full px-4 py-2.5">
+      <div class="max-w-7xl mx-auto grid grid-cols-12 items-center gap-4">
+        <a class="col-span-2 sm:col-span-1" href="{% url 'index' %}">
+          <img
+            src="{% static 'icon.png' %}"
+            alt="logo"
+            class="w-[30px] h-[24px]"
+          />
+        </a>
+
+        <div
+          class="col-span-8 sm:col-span-10 grid grid-cols-1 md:grid-cols-12 items-center gap-4"
         >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
+          <ul
+            class="md:col-span-8 grid grid-flow-col auto-cols-max gap-4 items-center"
+          >
+            <li>
               <a
-                class="nav-link active"
-                aria-current="page"
+                class="text-custom hover:opacity-75 font-normal"
                 href="{% url 'index' %}"
                 >Inicio</a
               >
             </li>
-            <li class="nav-item">
+            <li>
               <a
-                class="nav-link active"
-                aria-current="page"
+                class="text-custom hover:opacity-75 font-normal"
                 href="{% url 'product_list' %}"
                 >Blog</a
               >
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% static 'CV.pdf' %}">CV</a>
-            </li>
-            <li class="nav-item dropdown">
+            <li>
               <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
+                class="text-custom hover:opacity-75 font-normal"
+                href="{% static 'CV.pdf' %}"
+                >CV</a
               >
-                Proyectos
-              </a>
-              <ul class="dropdown-menu">
+            </li>
+            <li class="relative group">
+              <button
+                class="text-custom hover:opacity-75 inline-grid grid-flow-col items-center gap-1"
+              >
+                Proyectos <span>▼</span>
+              </button>
+              <ul
+                class="absolute left-0 hidden group-hover:grid bg-white border border-gray-200 shadow-md rounded-md py-2 w-56 z-50"
+              >
                 <li>
                   <a
-                    class="dropdown-item"
+                    class="block px-4 py-2 text-black hover:bg-gray-100"
                     href="https://github.com/mechikuroki/tp1"
                     >Reproductor de música</a
                   >
                 </li>
                 <li>
                   <a
-                    class="dropdown-item"
+                    class="block px-4 py-2 text-black hover:bg-gray-100"
                     href="https://github.com/mechikuroki/nomekops"
                     >Implementación de diferentes DSA</a
                   >
                 </li>
-                <li><hr class="dropdown-divider" /></li>
+                <li class="my-1 border-t border-gray-200"></li>
                 <li>
-                  <a class="dropdown-item" href="https://github.com/mechikuroki"
+                  <a
+                    class="block px-4 py-2 text-black hover:bg-gray-100"
+                    href="https://github.com/mechikuroki"
                     >Github</a
                   >
                 </li>
@@ -94,30 +89,64 @@
             </li>
           </ul>
         </div>
-        <div class="theme-toggle">
-          <input type="radio" id="mode_dark" name="mode" value="dark" />
-          <label for="mode_dark">🌙</label>
-          <input
-            type="radio"
-            id="mode_light"
-            name="mode"
-            value="light"
-            checked
-          />
-          <label for="mode_light">☀️</label>
+
+        <div
+          class="col-span-2 sm:col-span-1 grid place-items-center justify-self-end"
+        >
+          <div class="grid place-items-center">
+            <input
+              type="radio"
+              id="mode_dark"
+              name="mode"
+              value="dark"
+              class="sr-only"
+            />
+            <label
+              for="mode_dark"
+              class="w-10 h-10 grid place-items-center cursor-pointer hidden"
+              >🌙</label
+            >
+            <input
+              type="radio"
+              id="mode_light"
+              name="mode"
+              value="light"
+              class="sr-only"
+              checked
+            />
+            <label
+              for="mode_light"
+              class="w-10 h-10 grid place-items-center cursor-pointer hidden"
+              >☀️</label
+            >
+          </div>
         </div>
       </div>
     </nav>
 
-    <header>
-      <h1 aria-label="¡Hola! Soy Mer">
+    <header class="text-center">
+      <h1
+        class="font-normal text-custom text-[clamp(2.5rem,6vw,4.75rem)] text-center p-[20px_10px]"
+      >
         ¡Hola! Soy&nbsp;<span class="typewriter"></span>
       </h1>
-      <div class="spaced-box"></div>
-      <div class="centered-container">
-        <div class="centered-item"><h2>Sobre mi:</h2></div>
-        <div class="centered-item">
-          <p>
+      <div class="mb-5"></div>
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 place-items-center min-h-[30vh] bg-accent-basic gap-[15px] p-5 md:p-[40px]"
+      >
+        <div
+          class="bg-accent text-xl text-center grid place-items-center w-full min-h-full rounded-lg p-[15px]"
+        >
+          <h2
+            class="font-normal text-custom text-[clamp(1.8rem,4vw,2.5rem)] p-2.5"
+          >
+            Sobre mi:
+          </h2>
+        </div>
+        <div
+          class="bg-accent text-xl text-center grid place-items-center w-full min-h-full rounded-lg p-[15px]"
+        >
+          <p class="text-xl text-center p-2.5 text-custom">
             Soy una estudiante del Huergo. Allí hice varios proyectos en Python,
             y fuera del colegio hice varios en Javascript y Go, que voy a subir
             a Github.
@@ -126,47 +155,67 @@
       </div>
     </header>
 
-    <div class="card-wrapper">
-      <div class="card">
-        <h3>Reproductor de música</h3>
-        <p>
+    <div
+      class="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-[20px] p-[20px] w-full"
+    >
+      <div
+        class="card-custom rounded-[6px] p-[20px] text-center h-[90vh] grid grid-rows-[auto_1fr_auto] place-items-center"
+      >
+        <h3
+          class="font-normal text-custom text-[clamp(1.8rem,4vw,2.5rem)] p-2.5"
+        >
+          Reproductor de música
+        </h3>
+        <p class="text-xl text-center p-2.5 text-custom">
           Es un reproductor de música hecho en Python para escuchar archivos que
           se tengan en el sistema. Acepta mp3, flac, wav y más.
         </p>
         <a
-          class="btn btn-outline-dark btn-lg"
+          class="btn-outline-custom inline-block px-4 py-2 border border-black rounded hover:bg-black hover:text-white transition-colors duration-200"
           href="https://github.com/mechikuroki/tp1"
           role="button"
           >Ir</a
         >
       </div>
 
-      <div class="card">
-        <h3>Github</h3>
-        <p>¡Mi Github!</p>
+      <div
+        class="card-custom rounded-[6px] p-[20px] text-center h-[90vh] grid grid-rows-[auto_1fr_auto_auto] place-items-center"
+      >
+        <h3
+          class="font-normal text-custom text-[clamp(1.8rem,4vw,2.5rem)] p-2.5"
+        >
+          Github
+        </h3>
+        <p class="text-xl text-center p-2.5 text-custom">¡Mi Github!</p>
         <img
-          class="github-icon"
+          class="github-icon max-w-full h-auto max-h-[200px] object-contain"
           src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original"
           alt="github"
           width="200"
           height="300"
         />
         <a
-          class="btn btn-outline-dark btn-lg"
+          class="btn-outline-custom inline-block px-4 py-2 border border-black rounded hover:bg-black hover:text-white transition-colors duration-200"
           href="https://github.com/mechikuroki"
           role="button"
           >Ir</a
         >
       </div>
 
-      <div class="card">
-        <h3>Implementación de diferentes DSA</h3>
-        <p>
+      <div
+        class="card-custom rounded-[6px] p-[20px] text-center h-[90vh] grid grid-rows-[auto_1fr_auto] place-items-center"
+      >
+        <h3
+          class="font-normal text-custom text-[clamp(1.8rem,4vw,2.5rem)] p-2.5"
+        >
+          Implementación de diferentes DSA
+        </h3>
+        <p class="text-xl text-center p-2.5 text-custom">
           Muestra de estructuras como linked lists y hash maps, y de algoritmos
           de búsqueda varios.
         </p>
         <a
-          class="btn btn-outline-dark btn-lg"
+          class="btn-outline-custom inline-block px-4 py-2 border border-black rounded hover:bg-black hover:text-white transition-colors duration-200"
           href="https://github.com/mechikuroki/nomekops"
           role="button"
           >Ir</a
@@ -174,26 +223,31 @@
       </div>
     </div>
 
-    <div class="spaced-box"></div>
+    <div class="mb-5"></div>
 
-    <footer>
-      <div class="spaced-box"></div>
-      <h4>¡Contactame!</h4>
-      <div class="centered-link">
-        <a href="mailto:kurokimercedes@gmail.com">Email</a>
+    <footer class="bg-accent text-center py-4">
+      <div class="mb-5"></div>
+      <h4
+        class="font-normal text-custom text-[clamp(1.5rem,3vw,1.875rem)] bg-accent-basic p-2.5"
+      >
+        ¡Contactame!
+      </h4>
+      <div class="text-center">
+        <a
+          class="p-2.5 inline-block dark-link"
+          href="mailto:kurokimercedes@gmail.com"
+          >Email</a
+        >
       </div>
-      <div class="spaced-box"></div>
-      <div class="centered-link">
-        <a href="https://github.com/mechikuroki">Github</a>
+      <div class="mb-5"></div>
+      <div class="text-center">
+        <a
+          class="p-2.5 inline-block dark-link"
+          href="https://github.com/mechikuroki"
+          >Github</a
+        >
       </div>
-      <div class="spaced-box"></div>
+      <div class="mb-5"></div>
     </footer>
-
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"
-    ></script>
   </body>
 </html>
-
