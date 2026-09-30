@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.core.mail import send_mail
 from .models import Product, Comment
 from .forms import ProductForm, CommentForm  
 
@@ -27,6 +28,14 @@ def product_detail(request, pk):
                     pass 
             
             comment.save()
+            send_mail(
+                subject='Welcome to Our Platform!',
+                from_email='averagedostoyevskinovelenjoyer@example.com',
+                message="This is the plain-text fallback message for email clients that don't support HTML.",
+                recipient_list=[form.cleaned_data['email']],
+                html_message="<h1>Hello!</h1><p>This is an <strong>HTML</strong> formatted email.</p>",
+                fail_silently=True
+                )
             return redirect('product_detail', pk=pk)
     else:
         form = CommentForm()

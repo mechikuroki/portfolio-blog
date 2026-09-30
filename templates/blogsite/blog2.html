@@ -183,10 +183,11 @@
           <div class="text-gray-800 text-base leading-relaxed my-2">
             {{ comment.body|linebreaks }}
           </div>
-{% for children in comment.children.all %}
-                    <div class="text-yellow-500">
-                        <p><strong>{{ children.name }}</strong></p>
-                        <p>{{ children.body }}</p>
+{% for child in comment.children.all %}
+<div class="text-[var(--accent-color-basic)]-500">
+	<p><strong>{{ child.name }}</strong></p>
+  <small class="text-xs text-gray-600 font-mono">{{ child.created_at|date:"d M Y, H:i" }}</small>
+                        <p>{{ child.body }}</p>
                     </div>
                 {% endfor %}
 
@@ -210,7 +211,7 @@
             </div>
             <button
               type="submit"
-              class="border border-black-500 text-black-500 bg-[var(--accent-color-basic)]-500 px-3 py-1 rounded hover:bg-black hover:text-white transition-colors"
+              class="border border-[var(--text-color)]-500 text-[var(--text-color)]-500 bg-[var(--accent-color-basic)]-500 px-3 py-1 rounded hover:bg-black hover:text-white transition-colors"
             >
               Reply
             </button>
