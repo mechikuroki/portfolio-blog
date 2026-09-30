@@ -12,7 +12,31 @@ def product_list(request):
 
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    new_comment = None
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.product = product
+            
+            parent_id = request.POST.get('parent_id')
+            if parent_id:
+                try:
+                    parent_comment = Comment.objects.get(pk=parent_id)
+                    comment.parent = parent_comment
+                except Comment.DoesNotExist:
+                    pass 
+            
+            comment.save()
+            return redirect('product_detail', pk=pk)
+    else:
+        form = CommentForm()
+
+    comments = product.comments.filter(parent__isnull=True)
+    return render(request, 'blogsite/blog2.html', {'product': product,
+                                           'comments': comments,
+                                           'comment_form': form})
+
+'''
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
@@ -25,6 +49,7 @@ def product_detail(request, pk):
     return render(request, 'blogsite/blog2.html', {'product': product,
                                            'comments': product.comments,
                                            'comment_form': comment_form})
+'''
 
 def search(request):
     if request.method == 'POST':
@@ -62,12 +87,11 @@ def delete_comment(request, pk):
     else:
         return redirect('product_list')
 
-
-
+    
 """
 def edit_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    if request.method == 'POST':
+    if r|equest.method == 'POST':
         form = ProductForm(request.POST, instance=product)
         if form.is_valid():
             form.save()

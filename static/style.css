@@ -26,7 +26,6 @@
   }
 }
 
-/* Dark mode conditional utility overrides */
 :has(#mode_dark:checked) .github-icon {
   filter: invert(1) brightness(2);
 }
@@ -46,13 +45,11 @@
   color: #121212 !important;
 }
 
-/* Theme radio switcher visibility controls */
 :root:has(#mode_dark:checked) label[for="mode_light"] { display: grid; }
 :root:has(#mode_dark:checked) label[for="mode_dark"] { display: none; }
 :root:has(#mode_light:checked) label[for="mode_light"] { display: none; }
 :root:has(#mode_light:checked) label[for="mode_dark"] { display: grid; }
 
-/* Custom Colors & Utilities */
 .bg-main { background-color: var(--main-background); }
 .bg-accent { background-color: var(--accent-color); }
 .bg-accent-2 { background-color: var(--accent-color-2); }
@@ -74,7 +71,6 @@
   background-color: var(--accent-color-2) !important;
 }
 
-/* Typewriter Animation */
 @keyframes typing {
   0.0000%, 22.2222% { content: ""; }
   1.8519%, 20.3704% { content: "M"; }

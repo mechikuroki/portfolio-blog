@@ -139,7 +139,7 @@
       />
     </div>
     <div class="mb-5"></div>
-    <p class="text-xl text-center p-2.5 text-custom">
+    <p class="text-xl width-l text-justify p-2.5 text-custom">
       {{ product.description }}
     </p>
 
@@ -183,6 +183,39 @@
           <div class="text-gray-800 text-base leading-relaxed my-2">
             {{ comment.body|linebreaks }}
           </div>
+{% for children in comment.children.all %}
+                    <div class="text-yellow-500">
+                        <p><strong>{{ children.name }}</strong></p>
+                        <p>{{ children.body }}</p>
+                    </div>
+                {% endfor %}
+
+
+          <div class="mt-3 text-right">
+            <form
+              class="inline"
+              method="POST"
+            >
+              {% csrf_token %} 
+	      <input
+		type="hidden"
+		name="parent_id" 
+		value="{{ comment.id }}"
+              >
+          
+            <div
+              class="comment-form-fields [&_p]:mb-3 [&_input]:form-control [&_textarea]:form-control"
+            >
+              {{ comment_form.as_p }}
+            </div>
+            <button
+              type="submit"
+              class="border border-black-500 text-black-500 bg-[var(--accent-color-basic)]-500 px-3 py-1 rounded hover:bg-black hover:text-white transition-colors"
+            >
+              Reply
+            </button>
+          </form>
+ 
 
           {% if user.is_superuser %}
           <div class="mt-3 text-right">
@@ -224,7 +257,7 @@
             </div>
             <button
               type="submit"
-              class="btn btn-primary btn-lg w-full sm:w-auto px-5 py-2 font-semibold shadow"
+              class="btn btn-primary btn-lg w-full sm:w-auto px-5 py-2 font-semibold border-4 border-[var(--accent-color-basic)]"
             >
               Publicar Comentario
             </button>
