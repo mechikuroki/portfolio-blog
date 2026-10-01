@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="es">
-  {% load static %}
+ {% load markdown_extras %} 
+ {% load static %}
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -138,11 +139,8 @@
         class="mx-auto border-4 border-accent"
       />
     </div>
-    <div class="mb-5"></div>
-    <p class="text-xl width-l text-justify p-2.5 text-custom">
-      {{ product.description }}
-    </p>
-
+    <div class=" mx-auto mb-5 text-justify"></div>
+ 	{{ product.description|markdown|safe }}
     <div class="text-center">
       <a class="dark-link" href="{% url 'product_list' %}">Volver al blog</a>
     </div>

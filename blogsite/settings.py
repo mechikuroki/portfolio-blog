@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'gallery',
+    'blog',
+    'portfolio'
 ]
 
 MIDDLEWARE = [
@@ -103,7 +104,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.1/topics/i18n/
 
-LANGUAGE_CODE = 'es'
+LANGUAGE_CODE = 'en-uk'
 
 TIME_ZONE = 'America/Buenos_Aires'
 
@@ -127,8 +128,28 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
 
+
 MAILERS = {
-    'default': {
-        'BACKEND': 'django.core.mail.backends.console.EmailBackend',
-    },
+    "default": {
+        "BACKEND": "django.core.mail.backends.console.EmailBackend", #if this was running an actual smtp server i'd use smtp instead of console. i´ve written the settings for that below.
+    }
 }
+
+
+
+'''
+
+MAILERS = {
+    "default": {
+        "BACKEND": "django.core.mail.backends.smtp.EmailBackend", 
+        "OPTIONS": {
+            "host": "://example.com",
+            "port": 587,          
+            "use_tls": True,     
+            "username": "mail@example.com",
+            "password": "password",
+        },
+    }
+}
+
+'''
