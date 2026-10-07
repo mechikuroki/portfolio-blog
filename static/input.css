@@ -1,6 +1,8 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@source "../templates/**/*.html";
+@source "../**/templates/**/*.html"; 
 
 @layer base {
   :root {
@@ -23,6 +25,16 @@
     font-family: "Electrolize", monospace !important;
     background-color: var(--main-background);
     color: var(--text-color);
+  }
+
+}
+
+@utility prose-mono {
+  @apply prose text-[var(--text-color)];
+
+  /* Enforce color inheritance on elements that the plugin usually overrides */
+  & :is(h1, h2, h3, h4, h5, h6, a, strong, code, ol, ul, li, blockquote) {
+    color: currentColor;
   }
 }
 
@@ -70,6 +82,11 @@
   transform: translateY(-5px);
   background-color: var(--accent-color-2) !important;
 }
+
+.link {
+  @apply underline text-blue-600 hover:text-blue-800;
+}
+
 
 @keyframes typing {
   0.0000%, 22.2222% { content: ""; }

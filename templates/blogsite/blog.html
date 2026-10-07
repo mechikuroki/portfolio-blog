@@ -1,13 +1,12 @@
 <!doctype html>
 <html lang="es">
-  {% load static %}
+  {% load static tailwind_tags %} {% load static %}
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="{% static 'icon.png' %}" type="image/x-icon" href="icon.png" />
-    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    {% tailwind_preload_css %} {% tailwind_css %}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -61,7 +60,7 @@
                 Proyectos <span>▼</span>
               </button>
               <ul
-                class="absolute left-0 hidden group-hover:grid bg-white border border-gray-200 shadow-md rounded-md py-2 w-56 z-50"
+                class="absolute right-0 sm:left-0 hidden group-hover:grid bg-white border border-gray-200 shadow-md rounded-md py-2 w-56 z-50"
               >
                 <li>
                   <a
@@ -159,63 +158,57 @@
       >
         Blog
       </h1>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
         {% for product in products %}
-
-        <a href="{% url 'product_detail' product.pk %}">
-          <div class="w-full">
-            <div
-              class="card-custom rounded-[6px] p-[20px] text-center h-[90vh] grid grid-rows-[auto_1fr] place-items-center"
+        <div
+          class="card-custom rounded-[6px] p-5 text-center flex flex-col justify-between h-full"
+        >
+          <a
+            href="{% url 'product_detail' product.pk %}"
+            class="flex flex-col items-center flex-grow"
+          >
+            <img
+              src="{{ product.image.url }}"
+              alt="{{ product.created_name }}"
+              class="max-w-full h-[200px] object-contain mb-4"
+            />
+            <h5 class="bg-accent-basic text-custom p-2.5 w-full font-normal">
+              {{ product.name }}
+            </h5>
+            <p class="text-xl text-center p-2.5 text-custom">
+              {{ product.short_description }}
+            </p>
+            <small class="text-custom p-1 block"
+              >Creado: {{ product.created_at }}</small
             >
-              <img
-                src="{{ product.image.url }}"
-                alt="{{ product.created_name }}"
-                class="max-w-full h-auto max-h-[200px] object-contain"
-              />
-              <div class="w-full grid place-items-center gap-2">
-                <h5
-                  class="bg-accent-basic text-custom p-2.5 w-full font-normal"
-                >
-                  {{ product.name }}
-                </h5>
-                <p class="text-xl text-center p-2.5 text-custom">
-                  {{ product.short_description }}
-                </p>
-                <small class="text-custom p-1 block"
-                  >Creado: {{ product.created_at }}</small
-                >
-                <small class="text-custom p-1 block"
-                  >Editado: {{ product.updated_at }}</small
-                >
+            <small class="text-custom p-1 block"
+              >Editado: {{ product.updated_at }}</small
+            >
 
-                <div class="flex flex-wrap gap-1 justify-center my-2">
-                  {% for tag in product.tags.all %}
-                  <span
-                    class="inline-block bg-slate-200 text-slate-800 text-xs font-semibold px-2.5 py-1 rounded-full border border-slate-300"
-                  >
-                    {{ tag.name }}
-                  </span>
-                  {% endfor %}
-                </div>
-
-                {% if user.is_superuser %}
-                <form
-                  class="my-2"
-                  method="GET"
-                  action="{% url 'delete' product.pk %}"
-                >
-                  <button
-                    type="submit"
-                    class="border border-red-500 text-red-500 px-3 py-1 rounded hover:bg-red-500 hover:text-white transition-colors"
-                  >
-                    Delete
-                  </button>
-                </form>
-                {% endif %}
-              </div>
+            <div class="flex flex-wrap gap-1 justify-center my-2">
+              {% for tag in product.tags.all %}
+              <span
+                class="inline-block bg-slate-200 text-slate-800 text-xs font-semibold px-2.5 py-1 rounded-full border border-slate-300"
+              >
+                {{ tag.name }}
+              </span>
+              {% endfor %}
             </div>
+          </a>
+
+          {% if user.is_superuser %}
+          <div class="mt-4 pt-2 border-t border-gray-200/20">
+            <form method="GET" action="{% url 'delete' product.pk %}">
+              <button
+                type="submit"
+                class="border border-red-500 text-red-500 px-3 py-1 rounded hover:bg-red-500 hover:text-white transition-colors"
+              >
+                Delete
+              </button>
+            </form>
           </div>
-        </a>
+          {% endif %}
+        </div>
         {% endfor %}
       </div>
     </div>
@@ -229,7 +222,7 @@
       </h4>
       <div class="text-center">
         <a
-          class="p-2.5 inline-block dark-link"
+          class="p-2.5 inline-block dark-link link"
           href="mailto:kurokimercedes@gmail.com"
           >Email</a
         >
@@ -237,7 +230,7 @@
       <div class="mb-5"></div>
       <div class="text-center">
         <a
-          class="p-2.5 inline-block dark-link"
+          class="p-2.5 inline-block dark-link link"
           href="https://github.com/mechikuroki"
           >Github</a
         >
@@ -246,3 +239,4 @@
     </footer>
   </body>
 </html>
+

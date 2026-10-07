@@ -1,5 +1,5 @@
 from django.db import models
-
+from re import sub
 class Tag(models.Model):
     name = models.CharField(max_length=150)
 
@@ -25,9 +25,9 @@ class Product(models.Model):
 
     def short_description(self):
         if len(self.description) > 100:
-            return self.description[:100] + '...'
+            return sub(r'[^a-zA-Z\s.]', '', self.description[:100]) + '...'
         else:
-            return self.description
+            return sub(r'[^a-zA-Z\s.]', '', self.description)
 
 class Comment(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='comments')

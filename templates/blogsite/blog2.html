@@ -1,14 +1,12 @@
 <!doctype html>
 <html lang="es">
- {% load markdown_extras %} 
- {% load static %}
+  {% load static tailwind_tags %} {% load markdown_extras %} {% load static %}
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ product.name }} - Blog</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="{% static 'icon.png' %}" type="image/x-icon" href="icon.png" />
-    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    {% tailwind_preload_css %} {% tailwind_css %}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -62,7 +60,7 @@
                 Proyectos <span>▼</span>
               </button>
               <ul
-                class="absolute left-0 hidden group-hover:grid bg-white border border-gray-200 shadow-md rounded-md py-2 w-56 z-50"
+                class="absolute right-0 sm:left-0 hidden group-hover:grid bg-white border border-gray-200 shadow-md rounded-md py-2 w-56 z-50"
               >
                 <li>
                   <a
@@ -139,10 +137,12 @@
         class="mx-auto border-4 border-accent"
       />
     </div>
-    <div class=" mx-auto mb-5 text-justify"></div>
- 	{{ product.description|markdown|safe }}
+    <div class="mx-auto mb-5 text-justify">
+	    <article class="prose-mono">{{ product.description|markdown|safe }}</article>
+    </div>
+
     <div class="text-center">
-      <a class="dark-link" href="{% url 'product_list' %}">Volver al blog</a>
+      <a class="dark-link link" href="{% url 'product_list' %}">Volver al blog</a>
     </div>
 
     <div class="flex flex-wrap justify-center gap-2 my-4">
@@ -169,7 +169,7 @@
             class="flex items-center justify-between border-b border-black/10 pb-2 mb-3"
           >
             <span
-              class="font-bold text-lg bg-[var(--accent-color-basic)] px-3 py-1 rounded-md"
+	    class="font-bold text-lg text-[var(--text-color)] bg-[var(--accent-color-basic)] px-3 py-1 rounded-md"
             >
               {{ comment.name }}
             </span>
@@ -178,67 +178,56 @@
             </span>
           </div>
 
-          <div class="text-gray-800 text-base leading-relaxed my-2">
+          <div class="text-[var(--text-color)] text-base leading-relaxed my-2">
             {{ comment.body|linebreaks }}
           </div>
-{% for child in comment.children.all %}
-<div class="text-[var(--accent-color-basic)]-500">
-	<p><strong>{{ child.name }}</strong></p>
-  <small class="text-xs text-gray-600 font-mono">{{ child.created_at|date:"d M Y, H:i" }}</small>
-                        <p>{{ child.body }}</p>
-                    </div>
-                {% endfor %}
 
-
-          <div class="mt-3 text-right">
-            <form
-              class="inline"
-              method="POST"
+          {% for child in comment.children.all %}
+          <div class="ml-6 pl-4 border-l-2 border-[var(--accent-color-2)] my-3">
+            <p class="font-bold text-sm">{{ child.name }}</p>
+            <small class="text-xs text-gray-600 font-mono block"
+              >{{ child.created_at|date:"d M Y, H:i" }}</small
             >
-              {% csrf_token %} 
-	      <input
-		type="hidden"
-		name="parent_id" 
-		value="{{ comment.id }}"
+            <p class="text-sm mt-1">{{ child.body }}</p>
+          </div>
+          {% endfor %}
+
+          <div
+            class="mt-4 pt-3 border-t border-black/10 flex flex-wrap items-center justify-between gap-2"
+          >
+            <form method="POST" class="flex-1">
+              {% csrf_token %}
+              <input type="hidden" name="parent_id" value="{{ comment.id }}" />
+              <div
+                class="comment-form-fields [&_p]:mb-2 [&_input]:border [&_input]:p-1 [&_input]:rounded [&_textarea]:border [&_textarea]:p-1 [&_textarea]:rounded [&_textarea]:w-full"
               >
-          
-            <div
-              class="comment-form-fields [&_p]:mb-3 [&_input]:form-control [&_textarea]:form-control"
-            >
-              {{ comment_form.as_p }}
-            </div>
-            <button
-              type="submit"
-              class="border border-[var(--text-color)]-500 text-[var(--text-color)]-500 bg-[var(--accent-color-basic)]-500 px-3 py-1 rounded hover:bg-black hover:text-white transition-colors"
-            >
-              Reply
-            </button>
-          </form>
- 
-
-          {% if user.is_superuser %}
-          <div class="mt-3 text-right">
-            <form
-              class="inline"
-              method="GET"
-              action="{% url 'delete_comment' comment.pk %}"
-            >
+                {{ comment_form.as_p }}
+              </div>
               <button
                 type="submit"
-                class="border border-red-500 text-red-500 px-3 py-1 rounded hover:bg-red-500 hover:text-white transition-colors"
+                class="bg-[var(--accent-color-basic)] text-black border border-gray-400 px-3 py-1 rounded hover:bg-black hover:text-white transition-colors text-sm font-medium"
+              >
+                Reply
+              </button>
+            </form>
+
+            {% if user.is_superuser %}
+            <form method="GET" action="{% url 'delete_comment' comment.pk %}">
+              <button
+                type="submit"
+                class="border border-red-500 text-red-500 px-3 py-1 rounded hover:bg-red-500 hover:text-white transition-colors text-sm"
               >
                 Delete
               </button>
             </form>
+            {% endif %}
           </div>
-          {% endif %}
         </li>
         {% empty %}
         <li class="text-center text-gray-500 py-4 italic">
           No hay comentarios.
         </li>
         {% endfor %}
-
         <li
           class="bg-[var(--accent-color)] border-2 border-[var(--accent-color-basic)] rounded-xl p-6 shadow-md mt-8"
         >
@@ -250,7 +239,7 @@
           <form method="post" class="space-y-4">
             {% csrf_token %}
             <div
-              class="comment-form-fields [&_p]:mb-3 [&_input]:form-control [&_textarea]:form-control"
+              class="comment-form-fields [&_p]:mb-2 [&_input]:border [&_input]:p-1 [&_input]:rounded [&_textarea]:border [&_textarea]:p-1 [&_textarea]:rounded [&_textarea]:w-full"
             >
               {{ comment_form.as_p }}
             </div>
@@ -273,7 +262,7 @@
       </h4>
       <div class="text-center">
         <a
-          class="p-2.5 inline-block dark-link"
+          class="p-2.5 inline-block dark-link link"
           href="mailto:kurokimercedes@gmail.com"
           >Email</a
         >
@@ -281,7 +270,7 @@
       <div class="mb-5"></div>
       <div class="text-center">
         <a
-          class="p-2.5 inline-block dark-link"
+          class="p-2.5 inline-block dark-link link"
           href="https://github.com/mechikuroki"
           >Github</a
         >
@@ -290,3 +279,4 @@
     </footer>
   </body>
 </html>
+

@@ -38,8 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
-    'portfolio'
+    'portfolio',
+    'tailwind',
+    'theme',
 ]
+
+TAILWIND_APP_NAME = 'theme'
+
+# if needed, add path to npm/npm executable. this tends to be automatic.
+# run 'which npm' or 'whereis npm' on unix-based OSs or 'where npm' on Windows cmd
+NPM_BIN_PATH = r'C:\Program Files\nodejs\npm.cmd'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
