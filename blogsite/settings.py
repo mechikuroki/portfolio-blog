@@ -27,6 +27,20 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+#to run this in production, you'd have to set this up
+'''
+DEBUG = False 
+
+ALLOWED_HOSTS = ['yourdomain.com', '123.45.67.89'] 
+
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+'''
 
 # Application definition
 

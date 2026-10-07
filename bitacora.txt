@@ -1,0 +1,24 @@
+- Hice la estructura básica del blog, para lo que
+me basé en un artículo de geeks for geeks. Después le integré el css del 
+portfolio original, su navbar y su footer.
+
+-Empecé a hacer los comentarios, me basé en varios artículos que
+explicaban como hacerlo. 
+
+-Implementé las tags
+
+-Implementé la búsqueda
+
+-Puse opción para borrar post/comentarios fuera del CMS de Django siendo superuser
+
+-Implementé subcomentarios
+
+-Mejoré (un poco) la parte estética, cambié mi css con Bootstrap por Tailwind
+
+-Hice que los posteos estén en formato markdown
+
+-Usé django-tailwind para instalar Tailwind bien (antes estaba usado por un
+elemento script en los head de los HTML)
+
+-Usé prose de Tailwind Typography para que los headers/listas de 
+los markdown se puedan ver
