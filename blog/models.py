@@ -1,5 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
 from re import sub
+
 class Tag(models.Model):
     name = models.CharField(max_length=150)
 
@@ -31,8 +33,7 @@ class Product(models.Model):
 
 class Comment(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='comments')
-    name = models.CharField(max_length=80)
-    email = models.EmailField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_comments')
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')

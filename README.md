@@ -1,5 +1,7 @@
 # Blog en Django
 
+Password del db.sqlite3 default es admin usuario admin
+
 ## Seteo:
 ```
 pip install django django-tailwind markdown

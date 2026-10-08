@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="es">
-  {% load static tailwind_tags %} {% load static %}
+  {% load static tailwind_tags %} {% load markdown_extras %} {% load static %}
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blog</title>
+    <title>{{ product.name }} - Blog</title>
     <link rel="{% static 'icon.png' %}" type="image/x-icon" href="icon.png" />
     {% tailwind_preload_css %} {% tailwind_css %}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -27,10 +27,10 @@
         </a>
 
         <div
-          class="col-span-8 sm:col-span-10 grid grid-cols-1 lg:grid-cols-12 items-center gap-4"
+          class="col-span-8 sm:col-span-10 grid grid-cols-1 md:grid-cols-12 items-center gap-4"
         >
           <ul
-            class="lg:col-span-7 grid grid-flow-col auto-cols-max gap-4 items-center"
+            class="md:col-span-8 grid grid-flow-col auto-cols-max gap-4 items-center"
           >
             <li>
               <a
@@ -88,35 +88,6 @@
               </ul>
             </li>
           </ul>
-
-          <form
-            class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-3 gap-2"
-            method="POST"
-            action="{% url 'search' %}"
-          >
-            {% csrf_token %}
-            <input
-              class="px-3 py-1.5 border border-gray-300 rounded text-black w-full"
-              type="search"
-              placeholder="Buscar..."
-              aria-label="Search"
-              name="search_query"
-            />
-            <button
-              type="submit"
-              class="bg-gray-600 text-white px-3 py-1.5 rounded hover:bg-gray-700 text-xs"
-              name="search_tags"
-            >
-              Buscar por tags
-            </button>
-            <button
-              type="submit"
-              class="bg-gray-600 text-white px-3 py-1.5 rounded hover:bg-gray-700 text-xs"
-              name="search_products"
-            >
-              Buscar por título
-            </button>
-          </form>
         </div>
 
         <div
@@ -153,68 +124,42 @@
       </div>
     </nav>
 
-    <div class="max-w-7xl mx-auto px-4 mt-12">
-      <h1
-        class="font-normal text-custom text-[clamp(2.5rem,6vw,4.75rem)] text-center p-[20px_10px]"
-      >
-        Blog
-      </h1>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-        {% for product in products %}
-        <div
-          class="card-custom rounded-[6px] p-5 text-center flex flex-col justify-between h-full"
-        >
-          <a
-            href="{% url 'product_detail' product.pk %}"
-            class="flex flex-col items-center flex-grow"
-          >
-            <img
-              src="{{ product.image.url }}"
-              alt="{{ product.created_name }}"
-              class="max-w-full h-[200px] object-contain mb-4"
-            />
-            <h5 class="bg-accent-basic text-custom p-2.5 w-full font-normal">
-              {{ product.name }}
-            </h5>
-            <p class="text-xl text-center p-2.5 text-custom">
-              {{ product.short_description }}
-            </p>
-            <small class="text-custom p-1 block"
-              >Creado: {{ product.created_at }}</small
-            >
-            <small class="text-custom p-1 block"
-              >Editado: {{ product.updated_at }}</small
-            >
+     <h1
+      class="font-normal text-custom text-[clamp(2.5rem,6vw,4.75rem)] p-[20px_10px]"
+    >
+Loguearse</h1>
+<form method="POST">
+    {% csrf_token %}
+    
+    {% if form.errors %}
+        <p class="text-red-500">Error. Intentá de nuevo.</p>
+    {% endif %}
 
-            <div class="flex flex-wrap gap-1 justify-center my-2">
-              {% for tag in product.tags.all %}
-              <span
-                class="inline-block bg-slate-200 text-slate-800 text-xs font-semibold px-2.5 py-1 rounded-full border border-slate-300"
-              >
-                {{ tag.name }}
-              </span>
-              {% endfor %}
-            </div>
-          </a>
-
-          {% if user.is_superuser %}
-          <div class="mt-4 pt-2 border-t border-gray-200/20">
-            <form method="GET" action="{% url 'delete' product.pk %}">
-              <button
-                type="submit"
-                class="border border-red-500 text-red-500 px-3 py-1 rounded hover:bg-red-500 hover:text-white transition-colors"
-              >
-                Borrar
-              </button>
-            </form>
-          </div>
-          {% endif %}
-        </div>
-        {% endfor %}
-      </div>
+    <div>
+        {{ form.username.label_tag }} <br>
+<div class="w-full bg-[var(--accent-color-basic)]">
+        {{ form.username }}
+</div>
     </div>
+    <br>
+    <div>
+        {{ form.password.label_tag }} <br>
+<div class="w-full bg-[var(--accent-color-basic)]">
+        {{ form.password }}
 
-    <footer class="bg-accent text-center py-4 mt-8">
+</div>
+    </div>
+    <br>
+            <button
+              type="submit"
+              class="btn btn-primary btn-lg w-full sm:w-auto px-5 py-2 font-semibold border-4 border-[var(--accent-color-basic)]"
+            >
+ Loguearse</button>
+</form>
+
+<p>¿No tenés una cuenta? <a class="link" href="{% url 'signup' %}">Registrate</a></p>
+
+   <footer class="bg-accent text-center py-4 mt-8">
       <div class="mb-5"></div>
       <h4
         class="font-normal text-custom text-[clamp(1.5rem,3vw,1.875rem)] bg-accent-basic p-2.5"

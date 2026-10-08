@@ -3,7 +3,9 @@ from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.mail import send_mail
 from .models import Product, Comment
-from .forms import ProductForm, CommentForm  
+from .forms import ProductForm, CommentForm, SignUpForm, LoginForm
+from django.contrib.auth import authenticate, login
+
 
 def product_list(request):
     products = Product.objects.all()
@@ -12,9 +14,13 @@ def product_list(request):
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return redirect('login')
+
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
+            comment.user = request.user
             comment.product = product
             
             parent_id = request.POST.get('parent_id')
@@ -26,14 +32,6 @@ def product_detail(request, pk):
                     pass 
             
             comment.save()
-            send_mail(
-                subject='Welcome to Our Platform!',
-                message="This is the plain-text fallback message for email clients that don't support HTML.",
-                from_email=None,
-                recipient_list=[form.cleaned_data['email']],
-                html_message="<h1>Hello!</h1><p>This is an <strong>HTML</strong> formatted email.</p>",
-                fail_silently=False
-                )
             return redirect('product_detail', pk=pk)
     else:
         form = CommentForm()
@@ -93,6 +91,40 @@ def delete_comment(request, pk):
         return render(request, 'blogsite/delete_comment.html', {'comment': comment})
     else:
         return redirect('product_list')
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            send_mail(
+                subject='¡Bienvenido!',
+                message="¡Hola! Gracias por comentar.",
+                from_email=None,
+                recipient_list=[form.cleaned_data['email']],
+                html_message="<h1>¡Hola!</h1><p><strong>Gracias</strong> por comentar.</p>",
+                fail_silently=True
+                )
+
+            return redirect('login')
+    else:
+        form = SignUpForm()
+    return render(request, 'blogsite/signup.html', {'form': form})
+
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('product_list')
+    else:
+        form = LoginForm()
+    return render(request, 'blogsite/login.html', {'form': form})
+
 
     
 """
