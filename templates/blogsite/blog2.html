@@ -55,12 +55,13 @@
             </li>
             <li class="relative group">
               <button
-                class="text-custom hover:opacity-75 inline-grid grid-flow-col items-center gap-1"
+                type="button"
+                class="text-custom hover:opacity-75 inline-grid grid-flow-col items-center gap-1 focus:outline-none"
               >
                 Proyectos <span>▼</span>
               </button>
               <ul
-                class="absolute right-0 sm:left-0 hidden group-hover:grid bg-white border border-gray-200 shadow-md rounded-md py-2 w-56 z-50"
+                class="absolute left-1/2 -translate-x-1/2 hidden group-hover:grid group-focus-within:grid bg-white border border-gray-200 shadow-md rounded-md py-2 w-[calc(100vw-2rem)] max-w-xs sm:w-56 sm:left-0 sm:translate-x-0 z-50"
               >
                 <li>
                   <a
@@ -138,11 +139,15 @@
       />
     </div>
     <div class="mx-auto mb-5 text-justify">
-	    <article class="prose-mono">{{ product.description|markdown|safe }}</article>
+      <article class="prose-mono">
+        {{ product.description|markdown|safe }}
+      </article>
     </div>
 
     <div class="text-center">
-      <a class="dark-link link" href="{% url 'product_list' %}">Volver al blog</a>
+      <a class="dark-link link" href="{% url 'product_list' %}"
+        >Volver al blog</a
+      >
     </div>
 
     <div class="flex flex-wrap justify-center gap-2 my-4">
@@ -169,7 +174,7 @@
             class="flex items-center justify-between border-b border-black/10 pb-2 mb-3"
           >
             <span
-	    class="font-bold text-lg text-[var(--text-color)] bg-[var(--accent-color-basic)] px-3 py-1 rounded-md"
+              class="font-bold text-lg text-[var(--text-color)] bg-[var(--accent-color-basic)] px-3 py-1 rounded-md"
             >
               {{ comment.name }}
             </span>
@@ -279,4 +284,3 @@
     </footer>
   </body>
 </html>
-
