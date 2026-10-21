@@ -87,6 +87,21 @@
                 </li>
               </ul>
             </li>
+
+            <li>
+              {% if user.is_authenticated %}
+              <form
+                action="{% url 'logout' %}"
+                method="post"
+                style="display: inline"
+              >
+                {% csrf_token %}
+                <button type="submit" class="link">Deslogueate</button>
+              </form>
+              {% else %}
+              <a href="{% url 'login' %}" class="link">Logueate</a>
+              {% endif %}
+            </li>
           </ul>
         </div>
 
@@ -127,71 +142,61 @@
     <h1
       class="font-normal text-custom text-[clamp(2.5rem,6vw,4.75rem)] p-[20px_10px]"
     >
-Registrarse</h1>
-<form method="POST">
-    {% csrf_token %}
-    
-    {% if form.non_field_errors %}
-        <div class="text-red-500">
-            {{ form.non_field_errors }}
-        </div>
-    {% endif %}
+      Registrarse
+    </h1>
+    <form method="POST">
+      {% csrf_token %} {% if form.non_field_errors %}
+      <div class="text-red-500">{{ form.non_field_errors }}</div>
+      {% endif %}
 
-    <div>
-        {{ form.username.label_tag }} <br>
-<div class="bg-[var(--accent-color-basic)]">
-        {{ form.username }}
-    </div>
+      <div>
+        {{ form.username.label_tag }} <br />
+        <div>{{ form.username }}</div>
         {% if form.username.errors %}
-            <p class="text-red-500">{{ form.username.errors.as_text }}</p>
+        <p class="text-red-500">{{ form.username.errors.as_text }}</p>
         {% endif %}
-    </div>
-    <br>
+      </div>
+      <br />
 
-    <div>
-        {{ form.email.label_tag }} <br>
-<div class="bg-[var(--accent-color-basic)]">
-        {{ form.email }}
-    </div>
+      <div>
+        {{ form.email.label_tag }} <br />
+        <div>{{ form.email }}</div>
         {% if form.email.errors %}
-            <p class="text-red-500">{{ form.email.errors.as_text }}</p>
+        <p class="text-red-500">{{ form.email.errors.as_text }}</p>
         {% endif %}
-    </div>
-    <br>
+      </div>
+      <br />
 
-    <div>
-        {{ form.password1.label_tag }} <br>
-<div class="bg-[var(--accent-color-basic)]">
-        {{ form.password1 }}
-    </div>
+      <div>
+        {{ form.password1.label_tag }} <br />
+        <div>{{ form.password1 }}</div>
         {% if form.password1.errors %}
-            <p class="text-red-500">{{ form.password1.errors.as_text }}</p>
+        <p class="text-red-500">{{ form.password1.errors.as_text }}</p>
         {% endif %}
-    </div>
-    <br>
+      </div>
+      <br />
 
-    <div>
-        {{ form.password2.label_tag }} <br>
-<div class="bg-[var(--accent-color-basic)]">
-        {{ form.password2 }}
-    </div>
+      <div>
+        {{ form.password2.label_tag }} <br />
+        <div>{{ form.password2 }}</div>
         {% if form.password2.errors %}
-            <p class="text-red-500">{{ form.password2.errors.as_text }}</p>
+        <p class="text-red-500">{{ form.password2.errors.as_text }}</p>
         {% endif %}
-    </div>
-    <br>
-            <button
-              type="submit"
-              class="btn btn-primary btn-lg w-full sm:w-auto px-5 py-2 font-semibold border-4 border-[var(--accent-color-basic)]"
-            >
- 
-Registrarse</button>
-</form>
+      </div>
+      <br />
+      <button
+        type="submit"
+        class="btn btn-primary btn-lg w-full sm:w-auto px-5 py-2 font-semibold border-4 border-[var(--accent-color-basic)]"
+      >
+        Registrarse
+      </button>
+    </form>
 
-<p>¿Tenés una cuenta? <a class="link" href="{% url 'login' %}">Registrate</a></p>
+    <p>
+      ¿Tenés una cuenta? <a class="link" href="{% url 'login' %}">Logueate</a>
+    </p>
 
-
-   <footer class="bg-accent text-center py-4 mt-8">
+    <footer class="bg-accent text-center py-4 mt-8">
       <div class="mb-5"></div>
       <h4
         class="font-normal text-custom text-[clamp(1.5rem,3vw,1.875rem)] bg-accent-basic p-2.5"
@@ -217,3 +222,4 @@ Registrarse</button>
     </footer>
   </body>
 </html>
+

@@ -14,12 +14,22 @@ class CommentForm(forms.ModelForm):
         fields = ('body',)
 
 class SignUpForm(UserCreationForm):
-    email = forms.EmailField(required=True)
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={
+            'class': 'bg-[var(--accent-color-basic)]', 
+        }), 
+        required=True
+    )
 
     class Meta:
         model = User
-        fields = ('username', 'email') 
+        fields = ('username', 'email')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'bg-[var(--accent-color-basic)]'
 
 class LoginForm(AuthenticationForm):
-    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control bg-[var(--accent-color-basic)]'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control bg-[var(--accent-color-basic)]'}))

@@ -87,6 +87,20 @@
                 </li>
               </ul>
             </li>
+            <li>
+              {% if user.is_authenticated %}
+              <form
+                action="{% url 'logout' %}"
+                method="post"
+                style="display: inline"
+              >
+                {% csrf_token %}
+                <button type="submit" class="link">Deslogueate</button>
+              </form>
+              {% else %}
+              <a href="{% url 'login' %}" class="link">Logueate</a>
+              {% endif %}
+            </li>
           </ul>
 
           <form
@@ -240,3 +254,4 @@
     </footer>
   </body>
 </html>
+

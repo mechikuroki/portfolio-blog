@@ -87,6 +87,20 @@
                 </li>
               </ul>
             </li>
+            <li>
+              {% if user.is_authenticated %}
+              <form
+                action="{% url 'logout' %}"
+                method="post"
+                style="display: inline"
+              >
+                {% csrf_token %}
+                <button type="submit" class="link">Deslogueate</button>
+              </form>
+              {% else %}
+              <a href="{% url 'login' %}" class="link">Logueate</a>
+              {% endif %}
+            </li>
           </ul>
         </div>
 
@@ -161,7 +175,7 @@
     </div>
 
     <div class="mb-5"></div>
-{% if user.is_authenticated %}
+    {% if user.is_authenticated %}
 
     <div class="max-w-3xl mx-auto px-4 my-8">
       <h3 class="text-2xl font-bold mb-6 text-center">Comentarios</h3>
@@ -260,10 +274,12 @@
       </ul>
     </div>
 
-{% else %}
-    <p><a class="link" href="{% url 'login' %}">Logueate</a> para comentar y ver comentarios.</p>
-{% endif %}
-
+    {% else %}
+    <p class="text-center">
+      <a class="link" href="{% url 'login' %}">Logueate</a> para comentar y ver
+      comentarios.
+    </p>
+    {% endif %}
 
     <footer class="bg-accent text-center py-4 mt-8">
       <div class="mb-5"></div>
@@ -291,3 +307,4 @@
     </footer>
   </body>
 </html>
+

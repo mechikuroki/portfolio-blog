@@ -99,10 +99,10 @@ def signup_view(request):
             form.save()
             send_mail(
                 subject='¡Bienvenido!',
-                message="¡Hola! Gracias por comentar.",
+                message="¡Hola! Gracias por crearte un usuario.",
                 from_email=None,
                 recipient_list=[form.cleaned_data['email']],
-                html_message="<h1>¡Hola!</h1><p><strong>Gracias</strong> por comentar.</p>",
+                html_message="<h1>¡Hola!</h1><p><strong>Gracias</strong> por crearte un usuario.</p>",
                 fail_silently=True
                 )
 
